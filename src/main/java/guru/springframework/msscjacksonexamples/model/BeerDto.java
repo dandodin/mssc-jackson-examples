@@ -1,5 +1,7 @@
 package guru.springframework.msscjacksonexamples.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,6 +23,7 @@ import java.util.UUID;
 @Builder
 public class BeerDto {
 
+    @JsonProperty("beerId") // This will override spring.jackson.property-naming-strategy
     @Null
     private UUID id;
 
@@ -33,7 +36,11 @@ public class BeerDto {
     @Positive
     private Long upc;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING) // write price out as a string
     private BigDecimal price;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:Z", shape = JsonFormat.Shape.STRING) // format the date
     private OffsetDateTime createdDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:Z", shape = JsonFormat.Shape.STRING) // format the date
     private OffsetDateTime lastUpdatedDate;
 }
